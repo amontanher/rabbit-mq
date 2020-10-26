@@ -10,7 +10,7 @@ namespace MessageBroker.Publisher.Service
         private static ConnectionFactory _factory;
         private static IConnection _connection;
         private static IModel _channel;
-
+        
         public PublisherService()
         {
             CreateConnection();
@@ -27,15 +27,16 @@ namespace MessageBroker.Publisher.Service
 
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
+            
             _channel.QueueDeclare("huawei-relation", false, false, false, null);
         }
         
-        public void SendMessage<T>(T model, string routingKey)
+        public void SendMessage<T>(T model)
         {
             var messageBody = SerializeModel(model);
             
-            _channel.BasicPublish(exchange: "huawei-broker",
-                routingKey: routingKey,
+            _channel.BasicPublish(exchange: "",
+                routingKey: "task_queue",
                 basicProperties: null,
                 body: messageBody);
         }

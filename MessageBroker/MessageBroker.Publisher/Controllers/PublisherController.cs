@@ -29,7 +29,7 @@ namespace MessageBroker.Publisher.Controllers
         {
             try
             {
-                _service.SendMessage(born, "huawei-relation");
+                _service.SendMessage(born);
                 return Ok();
             }
             catch (Exception ex)
